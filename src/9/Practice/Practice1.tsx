@@ -1,15 +1,14 @@
 export const Practice1 = () => {
 
-    const calcTotalFee = (num: number): void => {
-        const total = num * 1.1
-        console.log(total)
+    const getTotalFee = (num: number): number => {
+        return num * 1.1
     }
 
-    const onClickPractice = () => calcTotalFee(1200)
+    const onClickPractice = () => getTotalFee(1200)
 
     return (
         <div>
-            <p>practice : multiple argment</p>
+            <p>practice : return value type</p>
             <button onClick={onClickPractice}>execute</button>
         </div>
     )
