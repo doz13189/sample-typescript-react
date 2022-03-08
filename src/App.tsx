@@ -3,12 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 import { Practice1 } from './9/Practice/Practice1';
 import { Practice2 } from './9/Practice/Practice2';
+import { Practice3 } from './9/Practice/Practice3';
+import { Practice4 } from './9/Practice/Practice4';
 
 function App() {
   return (
     <div className="App">
       <Practice1 />
       <Practice2 />
+      <Practice3 />
+      <Practice4 />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
