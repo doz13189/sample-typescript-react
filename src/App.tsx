@@ -1,14 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Practice1 } from './9/Practice/Practice1';
 import { Practice2 } from './9/Practice/Practice2';
 import { Practice3 } from './9/Practice/Practice3';
 import { Practice4 } from './9/Practice/Practice4';
+import { UserCard } from './11/UserCard';
+import axios from 'axios';
+import { User } from './11/types/api/user';
+import { UserProfile } from './11/types/userProfile';
+
+const user = {
+  id: 1,
+  name: 'tk',
+  email: 'light@gmail.com',
+  address: 'adress'
+}
 
 function App() {
+
+  const [ userProfiles, setUserProfiles ] = useState<UserProfile[]>([])
+  const [ loading, setLoading ] = useState(false)
+  const [ error, setError ] = useState(false)
+
+  const onClickFetchUser = () => {
+    
+    setLoading(true)
+    setError(false)
+
+    axios.get<User[]>('https://jsonplaceholder.typicode.com/users')
+      .then(res => {
+        const data = res.data.map((user: User) => ({
+            id: user.id,
+            name: `${user.name}(${user.username})`,
+            email: user.email,
+            address: user.address.city
+        }))
+
+        setUserProfiles(data)
+      })
+      .catch(() => {
+        setError(true)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
   return (
     <div className="App">
+      <div>
+        { loading ? <p>true</p> : <p>false</p> }
+      </div>
+      <div>
+        { error ? <p>true</p> : <p>false</p> }
+      </div>
+      <button onClick={onClickFetchUser}>fetch user data</button>
+      {
+        userProfiles.map((user) => {
+          return <UserCard key={user.id} user={user} />
+        })
+      }
       <Practice1 />
       <Practice2 />
       <Practice3 />
