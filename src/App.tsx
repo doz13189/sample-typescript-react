@@ -9,6 +9,7 @@ import { UserCard } from './11/UserCard';
 import axios from 'axios';
 import { User } from './11/types/api/user';
 import { UserProfile } from './11/types/userProfile';
+import { useAllUser } from './11/hooks/useAllUsers';
 
 const user = {
   id: 1,
@@ -19,33 +20,9 @@ const user = {
 
 function App() {
 
-  const [ userProfiles, setUserProfiles ] = useState<UserProfile[]>([])
-  const [ loading, setLoading ] = useState(false)
-  const [ error, setError ] = useState(false)
+  const { getUsers, userProfiles, loading, error } = useAllUser()
 
-  const onClickFetchUser = () => {
-    
-    setLoading(true)
-    setError(false)
-
-    axios.get<User[]>('https://jsonplaceholder.typicode.com/users')
-      .then(res => {
-        const data = res.data.map((user: User) => ({
-            id: user.id,
-            name: `${user.name}(${user.username})`,
-            email: user.email,
-            address: user.address.city
-        }))
-
-        setUserProfiles(data)
-      })
-      .catch(() => {
-        setError(true)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
+  const onClickFetchUser = () => getUsers()
 
   return (
     <div className="App">
